@@ -99,6 +99,7 @@ public class MoveSelector : MonoBehaviour
         GameManager.instance.DeselectPiece(movingPiece);
         movingPiece = null;
         TileSelector selector = GetComponent<TileSelector>();
+        tileHighlight.SetActive(false);
 
         foreach (GameObject highlight in locationHighlights)
         {        
@@ -118,9 +119,16 @@ public class MoveSelector : MonoBehaviour
         locationHighlights = new List<GameObject>();
 
 
-        if (moveLocations.Count == 0 || movingPiece == null)
+        if (moveLocations.Count == 0)
+        {
+            Debug.Log(locationHighlights);
+            return;
+        }
+
+        if(movingPiece == null)
         {
             CancelMove();
+            Debug.Log(locationHighlights);
             return;
         }
 
