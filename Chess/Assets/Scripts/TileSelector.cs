@@ -48,19 +48,22 @@ public class TileSelector : MonoBehaviour
 
     void Update ()
     {
+
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
 
         if (Physics.Raycast(ray, out hit))
         {
             Vector3 point = hit.point;
             Vector2Int gridPoint = Geometry.GridFromPoint(point);
-
             tileHighlight.SetActive(true);
             tileHighlight.transform.position = Geometry.PointFromGrid(gridPoint);
             if (Input.GetMouseButtonDown(0))
             {   
+
+                Debug.Log(gridPoint);
+
                 if(selectedPiece) {
                     GameManager.instance.DeselectPiece(selectedPiece);
                     selectedPiece = null;
@@ -94,5 +97,6 @@ public class TileSelector : MonoBehaviour
         tileHighlight.SetActive(false);
         MoveSelector move = GetComponent<MoveSelector>();
         move.EnterState(movingPiece);
+        Debug.Log("6");
     }
 }

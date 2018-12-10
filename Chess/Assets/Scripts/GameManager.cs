@@ -28,14 +28,21 @@
  * THE SOFTWARE.
  */
 
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
     public Board board;
+
+    public GameObject tileHighlightPrefab;
+    public GameObject selectedPiece;
+    private GameObject tileHighlight;
 
     public GameObject whiteKing;
     public GameObject whiteQueen;
@@ -60,12 +67,14 @@ public class GameManager : MonoBehaviour
     public Player currentPlayer;
     public Player otherPlayer;
 
+    public Text text;
+
     void Awake()
     {
         instance = this;
     }
 
-    void Start ()
+    public void Start ()
     {
         pieces = new GameObject[8, 8];
         movedPawns = new List<GameObject>();
@@ -79,7 +88,7 @@ public class GameManager : MonoBehaviour
         InitialSetup();
     }
 
-    private void InitialSetup()
+    public void InitialSetup()
     {
         AddPiece(whiteRook, white, 0, 0);
         AddPiece(whiteKnight, white, 1, 0);
@@ -110,6 +119,71 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void alexaMove(string s, string d)
+    {
+        Debug.Log(s);
+        Debug.Log(d);
+
+        char first_s_char = System.Convert.ToChar(s.Substring(0,1));
+        int first_source = char.ToUpper(first_s_char) - 65;
+        char first_d_char = System.Convert.ToChar(d.Substring(0,1));
+        int first_dest = char.ToUpper(first_d_char) - 65;
+    
+        int second_source;
+        int.TryParse(s.Substring(1,1), out second_source);
+        int second_dest;
+        int.TryParse(d.Substring(1,1), out second_dest);
+
+        Vector2Int source = Geometry.GridPoint(first_source, second_source);
+        Vector2Int destination = Geometry.GridPoint(first_dest,second_dest);
+
+        currentSelectedPiece = pieces[source.x, source.y];
+
+        List<Vector2Int> moves = MovesForPiece(currentSelectedPiece);
+
+        if(!moves.Contains(destination)) {
+            text.text = "Invalid move!";
+            return;
+        }
+
+        if(!DoesPieceBelongToCurrentPlayer(currentSelectedPiece)) {
+            text.text = "Wrong player's turn!";
+            return;
+        }
+
+        if(pieces[destination.x, destination.y] != null) {
+            CapturePieceAt(destination);
+        }
+
+        Move(currentSelectedPiece, destination);
+
+        Piece pieceComponent = currentSelectedPiece.GetComponent<Piece>();
+        if (pieceComponent.type == PieceType.Pawn && !HasPawnMoved(currentSelectedPiece))
+        {
+            movedPawns.Add(currentSelectedPiece);
+        }
+
+        Vector2Int startGridPoint = GridForPiece(currentSelectedPiece);
+        pieces[startGridPoint.x, startGridPoint.y] = null;
+        pieces[destination.x, destination.y] = currentSelectedPiece;
+
+        NextPlayer();
+    }
+
+    public void alexaSelect()
+    {
+
+        Vector2Int source = Geometry.GridPoint(0,1);
+        Vector3 point = Geometry.PointFromGrid(source);
+        Vector2Int destination = Geometry.GridPoint(0,3);
+        GameObject selectedPiece = pieces[source.x, source.y];
+
+        if (selectedPiece)
+        {
+            board.SelectPiece(selectedPiece);
+        }
+    }
+
     public void AddPiece(GameObject prefab, Player player, int col, int row)
     {
         GameObject pieceObject = board.AddPiece(prefab, col, row);
@@ -118,7 +192,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void SelectPieceAtGrid(Vector2Int gridPoint)
-    {
+    {   
         GameObject selectedPiece = pieces[gridPoint.x, gridPoint.y];
         if (selectedPiece)
         {
@@ -170,7 +244,7 @@ public class GameManager : MonoBehaviour
         GameObject pieceToCapture = PieceAtGrid(gridPoint);
         if (pieceToCapture.GetComponent<Piece>().type == PieceType.King)
         {
-            Debug.Log(currentPlayer.name + " wins!");
+            text.text = currentPlayer.name + " wins!";
             Destroy(board.GetComponent<TileSelector>());
             Destroy(board.GetComponent<MoveSelector>());
         }

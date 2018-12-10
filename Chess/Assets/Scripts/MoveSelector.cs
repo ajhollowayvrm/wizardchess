@@ -62,10 +62,18 @@ public class MoveSelector : MonoBehaviour
             Vector3 point = hit.point;
             Vector2Int gridPoint = Geometry.GridFromPoint(point);
 
+            Debug.Log("1");
+
             tileHighlight.SetActive(true);
             tileHighlight.transform.position = Geometry.PointFromGrid(gridPoint);
+            
+            Debug.Log("2");
+            
             if (Input.GetMouseButtonDown(0))
             {
+                Debug.Log(gridPoint);
+                Debug.Log("3");
+
                 // Reference Point 2: check for valid move location
                 if (!moveLocations.Contains(gridPoint))
                 {
@@ -121,14 +129,12 @@ public class MoveSelector : MonoBehaviour
 
         if (moveLocations.Count == 0)
         {
-            Debug.Log(locationHighlights);
             return;
         }
 
         if(movingPiece == null)
         {
             CancelMove();
-            Debug.Log(locationHighlights);
             return;
         }
 

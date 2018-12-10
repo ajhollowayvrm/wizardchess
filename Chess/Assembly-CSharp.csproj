@@ -66,7 +66,9 @@
      <Compile Include="Assets\Scripts\Pieces\Queen.cs" />
      <Compile Include="Assets\Scripts\Pieces\Rook.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\s_TCP.cs" />
      <Compile Include="Assets\Scripts\TileSelector.cs" />
+     <Compile Include="Assets\Scripts\UnityMainThreadDispatcher.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
@@ -122,16 +124,16 @@
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
  <Reference Include="UnityEditor.StandardEvents">
- <HintPath>/Users/AJHolloway/Box/School/Information Technology/IT 555/HighFidelityV1/Chess/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+ <HintPath>/Users/AJHolloway/Desktop/wizardchess/Chess/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>/Users/AJHolloway/Box/School/Information Technology/IT 555/HighFidelityV1/Chess/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>/Users/AJHolloway/Desktop/wizardchess/Chess/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.PackageManagerUI.Editor">
- <HintPath>/Users/AJHolloway/Box/School/Information Technology/IT 555/HighFidelityV1/Chess/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+ <HintPath>/Users/AJHolloway/Desktop/wizardchess/Chess/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>/Users/AJHolloway/Box/School/Information Technology/IT 555/HighFidelityV1/Chess/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>/Users/AJHolloway/Desktop/wizardchess/Chess/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>/Applications/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
